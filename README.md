@@ -1,3 +1,5 @@
+Inspired by mamba-minimal - WIP
+
 ## mamba-minimal
 
 Simple, minimal implementation of Mamba in one file of PyTorch.
