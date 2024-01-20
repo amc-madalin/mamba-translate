@@ -1,0 +1,29 @@
+# Configuration for dataset loading
+lang_src: "en"  # Source language (example: "en" for English)
+lang_tgt: "fr"  # Target language (example: "fr" for French)
+tokenizer_file: "tokenizer_{}.json"
+seq_len: 350  # Maximum sequence length (number of tokens) for each example
+
+# Configuration for ModelArgs
+d_model: 512                 # Dimension of the model
+n_layer: 6                   # Number of layers in the model
+vocab_size: 10000            # Vocabulary size
+d_state: 16                  # Dimension of the state
+expand: 2                    # Expansion factor
+dt_rank: 'auto'              # Rank for DT (can be int or 'auto')
+d_conv: 4                    # Dimension of convolution
+pad_vocab_size_multiple: 8   # Padding multiple for vocab size
+conv_bias: True              # Whether to use bias in convolution
+bias: False                  # General bias flag
+
+# Configuration for TrainingArgs
+num_epochs: 10
+batch_size: 4               # Batch size
+lr: 0.0001                   # Learning rate
+warmup_steps: 4000           # Number of warmup steps
+total_steps: 40000           # Total number of steps
+log_interval: 1            # Log interval
+eval_interval: 1000          # Evaluation interval
+save_interval: 1000          # Save interval
+model_folder: "checkpoints"      # Directory to save checkpoints
+model_filename: "model"          # Name of the model
