@@ -97,15 +97,16 @@ def train():
             if global_step % config['log_interval'] == 0:
                 print(f"Epoch: {epoch}, Global step: {global_step}, Loss: {loss.item()}")
                 
-        # Save the model checkpoint
-        model_filename = get_weights_file_path(config, epoch)
-        print("Saving model to: ", model_filename)
-        torch.save({
-            'epoch': epoch,
-            'global_step': global_step,
-            'optimizer': optimizer.state_dict(),
-            'model_state_dict': model.state_dict()
-        }, model_filename)
+            save_epoch = 5
+            # Save the model checkpoint
+            model_filename = get_weights_file_path(config, save_epoch)
+            print("Saving model to: ", model_filename)
+            torch.save({
+                'epoch': save_epoch,
+                'global_step': global_step,
+                'optimizer': optimizer.state_dict(),
+                'model_state_dict': model.state_dict()
+            }, model_filename)
                 
                 
 if __name__ == "__main__":
