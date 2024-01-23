@@ -88,7 +88,8 @@ class Mamba(nn.Module):
         x = self.norm_f(x)
         logits = self.lm_head(x)
 
-        return logits
+        # return logits
+        return torch.log_softmax(logits, dim=-1)
 
     
     @staticmethod
