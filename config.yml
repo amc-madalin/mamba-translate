@@ -2,13 +2,13 @@
 lang_src: "en"  # Source language (example: "en" for English)
 lang_tgt: "fr"  # Target language (example: "fr" for French)
 tokenizer_file: "tokenizer_{}.json"
-seq_len: 350  # Maximum sequence length (number of tokens) for each example
+seq_len: 500  # Maximum sequence length (number of tokens) for each example
 
 # Configuration for ModelArgs
 d_model: 512                 # Dimension of the model
 n_layer: 6                   # Number of layers in the model
-vocab_size: 10000            # Vocabulary size
-d_state: 16                  # Dimension of the state
+vocab_size: 30000            # Vocabulary size
+d_state: 8                  # Dimension of the state
 expand: 2                    # Expansion factor
 dt_rank: 'auto'              # Rank for DT (can be int or 'auto')
 d_conv: 4                    # Dimension of convolution
@@ -27,3 +27,6 @@ eval_interval: 1000          # Evaluation interval
 save_interval: 1000          # Save interval
 model_folder: "checkpoints"      # Directory to save checkpoints
 model_filename: "model"          # Name of the model
+
+# Configuration for Preload
+preload: "2"               # Whether to preload data
