@@ -1,13 +1,13 @@
 import torch
 import datasets
-from utils import get_or_build_tokenizer, get_weights_file_path
+from utils import get_or_build_tokenizer, get_weights_file_path, causal_mask
 from dataset import BilingualDataset
 from modeltr import build_mambaseq2seq
 
 import yaml
 import os
 
-def greedy_decode(model, source, tokenizer_src, tokenizer_tgt, max_len, device):
+def greedy_decode(model, source, tokenizer_src, tokenizer_tgt, source_mask, max_len, device):
     sos_idx = tokenizer_src.token_to_id("[SOS]")
     eos_idx = tokenizer_src.token_to_id("[EOS]")
     
@@ -21,7 +21,7 @@ def greedy_decode(model, source, tokenizer_src, tokenizer_tgt, max_len, device):
             break
         
         # Build mask for target 
-        # decoder_mask = causal_mask(decoder_input.size(1)).type_as(source_mask).to(device) # (batch_size, seq_len, seq_len)
+        decoder_mask = causal_mask(decoder_input.size(1)).type_as(source_mask).to(device) # (batch_size, seq_len, seq_len)
 
         out = model.decode(decoder_input, encoder_output) # (batch_size, seq_len, d_model)
         
@@ -49,8 +49,9 @@ def test(model, test_ds, tokenizer_src, tokenizer_tgt, max_len, device):
     with torch.no_grad():
         for batch in test_ds:
             encoder_input = batch['encoder_input'].to(device)
+            encoder_mask = batch['encoder_mask'].to(device)
 
-            model_output = greedy_decode(model, encoder_input, tokenizer_src, tokenizer_tgt, max_len, device)
+            model_output = greedy_decode(model, encoder_input, tokenizer_src, tokenizer_tgt, encoder_mask, max_len, device)
             
             source_text = batch['src_text'][0]
             target_text = batch['tgt_text'][0]
@@ -71,7 +72,7 @@ if __name__ == "__main__":
         config = yaml.safe_load(file)
 
     # Load the model
-    model_path = get_weights_file_path(config, '2')  # replace 'latest' with your model's epoch
+    model_path = get_weights_file_path(config, '3')  # replace 'latest' with your model's epoch
     model = load_model(model_path, config, device)
 
     # Prepare the test dataset

@@ -15,6 +15,7 @@ d_conv: 4                    # Dimension of convolution
 pad_vocab_size_multiple: 8   # Padding multiple for vocab size
 conv_bias: True              # Whether to use bias in convolution
 bias: False                  # General bias flag
+num_heads: 8                 # Number of heads
 
 # Configuration for TrainingArgs
 num_epochs: 10
@@ -29,4 +30,4 @@ model_folder: "checkpoints"      # Directory to save checkpoints
 model_filename: "model"          # Name of the model
 
 # Configuration for Preload
-preload: "2"               # Whether to preload data
+preload: ~ #"2"               # Whether to preload data
